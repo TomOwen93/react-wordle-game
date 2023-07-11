@@ -1,6 +1,6 @@
 export const countLetters = (wordToCheck: string) => {
     const counter: { [letterCount: string]: number } = {};
-    for (let letter of wordToCheck) {
+    for (const letter of wordToCheck) {
         if (counter[letter]) {
             counter[letter] += 1;
         } else {

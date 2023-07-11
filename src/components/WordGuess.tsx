@@ -1,20 +1,25 @@
-interface WordGuessProps {
-    guess: {
-        text: string;
-        inCorrectLocation: string[];
-        inWord: string[];
-        notInWord: string[];
-    };
-}
+import { useAutoAnimate } from "@formkit/auto-animate/react";
 
-export function WordGuess({ guess }: WordGuessProps): JSX.Element {
+type Guess = { [letter: string]: string };
+type Guesses = Guess[];
+
+interface WordGuessProps {
+    guesses: Guesses;
+}
+export function WordGuess(props: WordGuessProps): JSX.Element {
+    const [animationParent] = useAutoAnimate();
+    console.log("props is:", props);
     return (
-        <div>
-            <p>
-                {guess.text.split("").map((letter) => (
-                    <span className="tile">{letter}</span>
-                ))}
-            </p>
+        <div className="guess-button-grid">
+            {props.guesses.map((guess, index) => (
+                <div key={index} ref={animationParent}>
+                    {Object.entries(guess).map(([letter, status]) => (
+                        <button className={`${status}-tile`} key={letter}>
+                            {letter}
+                        </button>
+                    ))}
+                </div>
+            ))}
         </div>
     );
 }

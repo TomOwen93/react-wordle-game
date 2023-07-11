@@ -1,8 +1,9 @@
 import { WordGuess } from "./WordGuess";
-import { useState, ChangeEvent, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { countLetters } from "./utils/countLetters";
 import { isCorrectLocation } from "./utils/isCorrectLocation";
 import { isInWord } from "./utils/isInWord";
+import { useAutoAnimate } from "@formkit/auto-animate/react";
 
 /*
  * pseudocode:
@@ -22,14 +23,9 @@ import { isInWord } from "./utils/isInWord";
  *
  */
 
-interface MarkedGuess {
-    guess: {
-        text: string;
-        inCorrectLocation: string[];
-        inWord: string[];
-        notInWord: string[];
-    };
-}
+type MarkedGuess = {
+    [letter: string]: string;
+};
 
 const alphabet = [
     "A",
@@ -63,10 +59,14 @@ const alphabet = [
 export function Grid(): JSX.Element {
     // const [guess, setGuess] = useState<MarkedGuess>([])
     const [targetWord, setTargetWord] = useState<string>("");
-    const [guesses, setGuesses] = useState<MarkedGuess[]>([]);
+    const [guesses, setGuesses] = useState<MarkedGuess[][]>([]);
     const [input, setInput] = useState<string>("");
     const [lettersRemaining, setLettersRemaining] =
         useState<string[]>(alphabet);
+
+    const [win, setWin] = useState<boolean>(false);
+
+    const [animationParent] = useAutoAnimate();
 
     const HandleFetch = async () => {
         const response = await fetch(
@@ -78,60 +78,60 @@ export function Grid(): JSX.Element {
 
     useEffect(() => {
         HandleFetch();
+        setGuesses([]);
     }, []);
 
     useEffect(() => {
-        console.log(guesses);
+        // console.log("Guesses is:", guesses);
     }, [guesses]);
 
     const handleCheckGuess = (guess: string): void => {
-        let guessOccurences: { [letterCount: string]: number } = {};
-        let guessAsArray = guess.split("");
-
-        const newGuess = {
-            guess: {
-                text: guess,
-                inCorrectLocation: [],
-                inWord: [],
-                notInWord: [],
-            },
-        };
-
-        let updatedGuess: {
-            text: string;
-            inCorrectLocation: string[];
-            inWord: string[];
-            notInWord: string[];
-        } = { ...newGuess.guess };
-
+        const guessOccurences: { [letterCount: string]: number } = {};
+        const guessAsArray = guess.split("");
         guessAsArray.forEach((letter) => (guessOccurences[letter] = 0));
 
-        guessAsArray.map((letter, index) => {
-            let occurenceCheck =
+        const newGuess = guessAsArray.map((letter, index) => {
+            const occurenceCheck =
                 guessOccurences[letter] < countLetters(targetWord)[letter];
             // console.log(`Guess letter occurences: ${guessOccurences[letter]}`, `Target letter occurences: ${countLetters(targetWord)[letter]}` , isCorrectLocation(letter, index, targetWord),occurenceCheck )
             // console.log(`checking letter ${letter}`)
-
             if (
                 occurenceCheck &&
                 isCorrectLocation(letter, index, targetWord)
             ) {
-                updatedGuess.inCorrectLocation = [
-                    ...updatedGuess.inCorrectLocation,
-                    letter,
-                ];
-                console.log(guesses);
                 guessOccurences[letter] += 1;
+                return { [letter]: "CorrectLocation" };
             } else if (occurenceCheck && isInWord(letter, targetWord)) {
-                updatedGuess.inWord = [...updatedGuess.inWord, letter];
                 guessOccurences[letter] += 1;
+                return { [letter]: "InWord" };
             } else {
-                updatedGuess.notInWord = [...updatedGuess.notInWord, letter];
+                setLettersRemaining((prev) =>
+                    prev.filter(
+                        (el) => targetWord.includes(el) || !el.includes(letter)
+                    )
+                );
+                return { [letter]: "NotInWord" };
             }
-            return updatedGuess;
         });
+        setGuesses((prev) => [...prev, newGuess]);
+        setInput("");
+        setWin(checkWin(newGuess));
+    };
 
-        setGuesses((prev) => [...prev, { guess: updatedGuess }]);
+    const checkWin = (
+        guess: {
+            [x: string]: string;
+        }[]
+    ) => {
+        if (
+            guess.every((el) =>
+                Object.values(el).every((el) => el === "CorrectLocation")
+            )
+        ) {
+            return true;
+        } else {
+            return false;
+        }
     };
 
     const handleInput = (inputText: string) => {
@@ -142,23 +142,51 @@ export function Grid(): JSX.Element {
         }
     };
 
+    const handleReset = () => {
+        setGuesses([]);
+        setWin(false);
+        setInput("");
+        HandleFetch();
+    };
+
+    const titleButtons = ["T", "O", "M", "'", "S"];
+    const colours = ["yellow", "green", "grey", "yellow", "green"];
+
     return (
         <div>
+            <div className="title-buttons">
+                {titleButtons.map((letter, index) => (
+                    <button
+                        key={index}
+                        className={`title-button-${colours[index]}`}
+                    >
+                        {letter}
+                    </button>
+                ))}
+            </div>
             <h1>Wordle</h1>
             <hr />
-            <div>
-                {guesses.map((el, index) => (
-                    <ul>
-                        <li className="grid-buttons" key={index}>
-                            <WordGuess guess={el.guess} />
-                        </li>
-                    </ul>
+            <div ref={animationParent}>
+                {guesses.map((arr, index) => (
+                    <WordGuess key={index} guesses={arr} />
                 ))}
             </div>
             <br />
-            {guesses.length < 6 && (
+
+            <div className="guess-button-grid" ref={animationParent}>
+                {input.split("").map((el, index) => (
+                    <button
+                        key={index}
+                        onClick={() => setInput((prev) => prev.replace(el, ""))}
+                        className="guess-tile"
+                    >
+                        {el}
+                    </button>
+                ))}{" "}
+            </div>
+
+            {guesses.length < 6 && win !== true && (
                 <div>
-                    <input value={input} maxLength={5} />
                     <br />
                     <br />
                     <div className="letter-button-grid">
@@ -182,9 +210,34 @@ export function Grid(): JSX.Element {
                     )}
                 </div>
             )}
-            <p>REMOVE THIS: {targetWord}</p>
+            {win === true && <h1> You win!!</h1>}
+            {win === true ||
+                (guesses.length === 6 && (
+                    <div>
+                        <h1 className="win-text">
+                            The word was:
+                            <div
+                                className="guess-button-grid"
+                                ref={animationParent}
+                            >
+                                {targetWord.split("").map((el, index) => (
+                                    <button key={index} className="guess-tile">
+                                        {el}
+                                    </button>
+                                ))}{" "}
+                            </div>
+                        </h1>
+                    </div>
+                ))}
+            {win === true && (
+                <button className="submit-button" onClick={handleReset}>
+                    {" "}
+                    Reset{" "}
+                </button>
+            )}
             <hr />
             <hr />
+            {targetWord}
         </div>
     );
 }
