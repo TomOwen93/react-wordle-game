@@ -175,7 +175,7 @@ export function Grid(): JSX.Element {
                     <div className="letter-button-grid">
                         {Object.keys(lettersRemaining).map((letter, index) => (
                             <button
-                                className={`letter-button`}
+                                className={`letter-button-${lettersRemaining[letter]}`}
                                 key={index}
                                 onClick={() => handleInput(letter)}
                             >
