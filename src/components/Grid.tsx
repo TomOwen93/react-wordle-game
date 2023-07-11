@@ -105,7 +105,6 @@ export function Grid(): JSX.Element {
                 guessOccurences[letter] += 1;
                 return { [letter]: "InWord" };
             } else {
-            
                 return { [letter]: "NotInWord" };
             }
         });
