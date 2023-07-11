@@ -237,7 +237,6 @@ export function Grid(): JSX.Element {
             )}
             <hr />
             <hr />
-         
         </div>
     );
 }
