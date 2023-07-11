@@ -5,24 +5,6 @@ import { isCorrectLocation } from "./utils/isCorrectLocation";
 import { isInWord } from "./utils/isInWord";
 import { useAutoAnimate } from "@formkit/auto-animate/react";
 
-/*
- * pseudocode:
- *
- * create a new variable called occurrencesInTarget = {actual occurences} ***helper function
- * create a new variable called correctOccurrencesInGuess = {}
- * create new variable called markedGuess = {}
- * for each letter in guess
- *  if correctOccurrencesInGuess.letter < occurrencesInTarget.letter AND letter is in the correct location*** helper function
- *      then add letter to markedGuess.inCorrectLocation
- *      and add letter occurrence to correctOccurrencesInGuess
- *  else correctOccurrencesInGuess.letter < occurrencesInTarget.letter AND if letter is in the word*** helper function
- *      then add letter to markedGuess.inWord
- *      and add letter occurrence to correctOccurrencesInGuess
- *  else
- *      add letter to markedGuess.notInWord
- *
- */
-
 type MarkedGuess = {
     [letter: string]: string;
 };
@@ -56,20 +38,24 @@ const alphabet = [
     "Z",
 ];
 
+const alphabetObj: { [string: string]: string } = {};
+
+for (const key of alphabet) {
+    alphabetObj[key] = "active";
+}
+
 export function Grid(): JSX.Element {
     // const [guess, setGuess] = useState<MarkedGuess>([])
     const [targetWord, setTargetWord] = useState<string>("");
     const [guesses, setGuesses] = useState<MarkedGuess[][]>([]);
     const [input, setInput] = useState<string>("");
-    const lettersRemaining = alphabet;
-
+    const lettersRemaining = alphabetObj;
     const [win, setWin] = useState<boolean>(false);
-
     const [animationParent] = useAutoAnimate();
 
     const HandleFetch = async () => {
         const response = await fetch(
-            "https://random-word-api.herokuapp.com/word?length=5"
+            "https://random-word-api.herokuapp.com/word?lang=en&length=5"
         );
         const jsonBody: string = await response.json();
         setTargetWord(jsonBody[0].toUpperCase());
@@ -104,6 +90,7 @@ export function Grid(): JSX.Element {
                 guessOccurences[letter] += 1;
                 return { [letter]: "InWord" };
             } else {
+                lettersRemaining[letter] = "inactive";
                 return { [letter]: "NotInWord" };
             }
         });
@@ -146,6 +133,8 @@ export function Grid(): JSX.Element {
     const titleButtons = ["T", "O", "M", "'", "S"];
     const colours = ["yellow", "green", "grey", "yellow", "green"];
 
+    console.log(alphabetObj);
+
     return (
         <div>
             <div className="title-buttons">
@@ -184,13 +173,17 @@ export function Grid(): JSX.Element {
                     <br />
                     <br />
                     <div className="letter-button-grid">
-                        {lettersRemaining.map((letter, index) => (
+                        {Object.keys(lettersRemaining).map((letter, index) => (
                             <button
-                                className="letter-button"
+                                className={`letter-button`}
                                 key={index}
                                 onClick={() => handleInput(letter)}
                             >
-                                {letter}
+                                {lettersRemaining[letter] === "active" &&
+                                    letter}
+                                {lettersRemaining[letter] === "inactive" && (
+                                    <s>{letter}</s>
+                                )}
                             </button>
                         ))}{" "}
                     </div>
