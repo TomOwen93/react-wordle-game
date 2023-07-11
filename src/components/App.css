@@ -1,3 +1,76 @@
-html {
-    background: #f8f8f8;
+@import url("https://fonts.googleapis.com/css2?family=Roboto&display=swap");
+
+.grid-buttons {
+    font: 100px;
+    display: grid;
+    grid-template-columns: 1, 1fr;
+    justify-items: center;
+    margin: 2px;
+}
+
+.header {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+hr {
+    width: auto;
+    font-family: "Franklin Gothic Medium", "Arial Narrow", Arial, sans-serif;
+}
+
+body {
+    background-color: whitesmoke;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: auto;
+    font-family: "Roboto", sans-serif;
+    font: bold;
+}
+
+.tile {
+    display: inline-block;
+    width: 40px;
+    height: 40px;
+    border: 1px solid #000;
+    text-align: center;
+    font-size: 24px;
+    line-height: 40px;
+}
+.tile + .tile {
+    margin-left: 10px;
+}
+
+.letter-button-grid {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 10px;
+}
+
+.letter-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 50px;
+    height: 50px;
+    border: 1px solid #000;
+    font-size: 18px;
+    cursor: pointer;
+}
+
+.letter-button:hover {
+    background-color: #f0f0f0;
+}
+
+.submit-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 200px;
+    height: 50px;
+    margin: 10px;
+    border: 1px solid #000;
+    font-size: 18px;
+    cursor: pointer;
 }
