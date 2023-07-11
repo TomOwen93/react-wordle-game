@@ -128,6 +128,9 @@ export function Grid(): JSX.Element {
         setWin(false);
         setInput("");
         HandleFetch();
+        for (const key of alphabet) {
+            alphabetObj[key] = "active";
+        }
     };
 
     const titleButtons = ["T", "O", "M", "'", "S"];
@@ -216,12 +219,13 @@ export function Grid(): JSX.Element {
                         </h1>
                     </div>
                 ))}
-            {win === true && (
-                <button className="submit-button" onClick={handleReset}>
-                    {" "}
-                    Reset{" "}
-                </button>
-            )}
+            {win === true ||
+                (guesses.length === 6 && (
+                    <button className="submit-button" onClick={handleReset}>
+                        {" "}
+                        Reset{" "}
+                    </button>
+                ))}
             <hr />
             <hr />
         </div>
