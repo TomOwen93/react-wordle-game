@@ -61,8 +61,7 @@ export function Grid(): JSX.Element {
     const [targetWord, setTargetWord] = useState<string>("");
     const [guesses, setGuesses] = useState<MarkedGuess[][]>([]);
     const [input, setInput] = useState<string>("");
-    const [lettersRemaining, setLettersRemaining] =
-        useState<string[]>(alphabet);
+    const lettersRemaining = alphabet;
 
     const [win, setWin] = useState<boolean>(false);
 
@@ -105,11 +104,6 @@ export function Grid(): JSX.Element {
                 guessOccurences[letter] += 1;
                 return { [letter]: "InWord" };
             } else {
-                setLettersRemaining((prev) =>
-                    prev.filter(
-                        (el) => targetWord.includes(el) || !el.includes(letter)
-                    )
-                );
                 return { [letter]: "NotInWord" };
             }
         });
