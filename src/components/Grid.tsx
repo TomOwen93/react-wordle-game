@@ -51,6 +51,7 @@ export function Grid(): JSX.Element {
     const [input, setInput] = useState<string>("");
     const lettersRemaining = alphabetObj;
     const [win, setWin] = useState<boolean>(false);
+
     const [animationParent] = useAutoAnimate();
 
     const HandleFetch = async () => {
@@ -65,10 +66,6 @@ export function Grid(): JSX.Element {
         HandleFetch();
         setGuesses([]);
     }, []);
-
-    useEffect(() => {
-        // console.log("Guesses is:", guesses);
-    }, [guesses]);
 
     const handleCheckGuess = (guess: string): void => {
         const guessOccurences: { [letterCount: string]: number } = {};
@@ -134,10 +131,18 @@ export function Grid(): JSX.Element {
         for (const key of alphabet) {
             alphabetObj[key] = "active";
         }
+        if (win === true) {
+            localStorage.setItem(
+                localStorage.length.toString(),
+                JSON.stringify(targetWord)
+            );
+        }
     };
 
     const titleButtons = ["T", "O", "M", "'", "S"];
     const colours = ["yellow", "green", "grey", "yellow", "green"];
+
+    const wordsinStorage = Object.values(localStorage).map((el: string) => el);
 
     return (
         <div>
@@ -159,7 +164,6 @@ export function Grid(): JSX.Element {
                 ))}
             </div>
             <br />
-
             <div className="guess-button-grid" ref={animationParent}>
                 {input.split("").map((el, index) => (
                     <button
@@ -171,7 +175,6 @@ export function Grid(): JSX.Element {
                     </button>
                 ))}{" "}
             </div>
-
             {guesses.length < 6 && win !== true && (
                 <div>
                     <br />
@@ -220,15 +223,20 @@ export function Grid(): JSX.Element {
                         </h1>
                     </div>
                 ))}
-            {win === true ||
-                (guesses.length === 6 && (
-                    <button className="submit-button" onClick={handleReset}>
-                        {" "}
-                        Reset{" "}
-                    </button>
+            {(win === true || guesses.length === 6) && (
+                <button className="submit-button" onClick={handleReset}>
+                    {" "}
+                    Reset{" "}
+                </button>
+            )}
+            <hr />
+            <hr />
+            <p>Previous wins:</p>{" "}
+            <ul>
+                {wordsinStorage.map((el, index) => (
+                    <li key={index}>{el}</li>
                 ))}
-            <hr />
-            <hr />
+            </ul>
         </div>
     );
 }
