@@ -231,12 +231,19 @@ export function Grid(): JSX.Element {
             )}
             <hr />
             <hr />
-            <p>Previous wins:</p>{" "}
-            <ul>
-                {wordsinStorage.map((el, index) => (
-                    <li key={index}>{el}</li>
-                ))}
-            </ul>
+
+            {localStorage.length > 0 && (
+                <div>
+                    {" "}
+                    <h3>PREVIOUS WINS:</h3>
+                    <hr />
+                    <ul>
+                        {wordsinStorage.map((el, index) => (
+                            <li key={index}>{el}</li>
+                        ))}
+                    </ul>
+                </div>
+            )}
         </div>
     );
 }
