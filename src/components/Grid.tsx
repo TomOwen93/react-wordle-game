@@ -90,7 +90,10 @@ export function Grid(): JSX.Element {
                 guessOccurences[letter] += 1;
                 return { [letter]: "InWord" };
             } else {
-                lettersRemaining[letter] = "inactive";
+                if (!isInWord(letter, targetWord)) {
+                    lettersRemaining[letter] = "inactive";
+                }
+                guessOccurences[letter] += 1;
                 return { [letter]: "NotInWord" };
             }
         });
@@ -135,8 +138,6 @@ export function Grid(): JSX.Element {
 
     const titleButtons = ["T", "O", "M", "'", "S"];
     const colours = ["yellow", "green", "grey", "yellow", "green"];
-
-    console.log(alphabetObj);
 
     return (
         <div>
