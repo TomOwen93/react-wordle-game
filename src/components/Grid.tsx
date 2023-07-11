@@ -105,11 +105,7 @@ export function Grid(): JSX.Element {
                 guessOccurences[letter] += 1;
                 return { [letter]: "InWord" };
             } else {
-                setLettersRemaining((prev) =>
-                    prev.filter(
-                        (el) => targetWord.includes(el) || !el.includes(letter)
-                    )
-                );
+            
                 return { [letter]: "NotInWord" };
             }
         });
