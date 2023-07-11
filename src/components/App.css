@@ -1,3 +1,206 @@
-html {
-    background: #f8f8f8;
+@import url("https://fonts.googleapis.com/css2?family=Roboto&display=swap");
+
+.header {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+hr {
+    width: auto;
+    font-family: "Franklin Gothic Medium", "Arial Narrow", Arial, sans-serif;
+}
+
+body {
+    background-color: whitesmoke;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    font-family: "Roboto", sans-serif;
+    font: bold;
+}
+
+.tile {
+    display: inline-block;
+    width: 40px;
+    height: 40px;
+    border: 1px solid #000;
+    text-align: center;
+    font-size: 24px;
+    line-height: 40px;
+}
+.tile + .tile {
+    margin-left: 10px;
+}
+
+.letter-button-grid {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 5px;
+}
+
+.letter-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 50px;
+    height: 50px;
+    border: 1px solid #000;
+    font-size: 18px;
+    cursor: pointer;
+}
+
+.letter-button:hover {
+    background-color: #f0f0f0;
+}
+
+.submit-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: fit-content;
+    height: 50px;
+    margin-top: 10px;
+    margin-left: auto;
+    margin-right: auto;
+    border: 1px solid #000;
+    font-size: 18px;
+    cursor: pointer;
+}
+
+.guess-button-grid {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 0px;
+    justify-content: center;
+    align-items: center;
+}
+
+.guess-button {
+    background-color: lightgray;
+    align-self: center;
+    width: 50px;
+    height: 50px;
+    border: 1px solid #000;
+    font-size: 18px;
+    cursor: pointer;
+    justify-content: center;
+    justify-self: center;
+}
+
+.guesses-list {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 5px;
+    justify-content: center;
+    align-items: center;
+    flex-direction: row;
+}
+
+.CorrectLocation-tile {
+    background-color: green;
+    color: white;
+    align-self: center;
+    width: 50px;
+    height: 50px;
+    border: 1px solid #000;
+    font-size: 18px;
+    justify-content: center;
+    justify-self: center;
+}
+
+.InWord-tile {
+    background-color: yellow;
+    align-self: center;
+
+    width: 50px;
+    height: 50px;
+    border: 1px solid #000;
+    font-size: 18px;
+    justify-content: center;
+    justify-self: center;
+}
+
+.NotInWord-tile {
+    background-color: grey;
+    align-self: center;
+
+    width: 50px;
+    height: 50px;
+    border: 1px solid #000;
+    font-size: 18px;
+    justify-content: center;
+    justify-self: center;
+}
+
+.title-buttons {
+    font: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: row;
+    margin: auto;
+}
+
+.title-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 30px;
+    height: 30px;
+    border: 1px solid #000;
+    font-size: 18px;
+    cursor: pointer;
+}
+
+.guess-tile {
+    width: 50px;
+    height: 50px;
+    border: 1px solid #000;
+    font-size: 18px;
+    cursor: pointer;
+}
+
+.title-button-yellow {
+    background-color: yellow;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 30px;
+    height: 30px;
+    border: 1px solid #000;
+    font-size: 18px;
+    cursor: pointer;
+}
+
+.title-button-grey {
+    background-color: grey;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 30px;
+    height: 30px;
+    border: 1px solid #000;
+    font-size: 18px;
+    cursor: pointer;
+}
+
+.title-button-green {
+    background-color: green;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 30px;
+    height: 30px;
+    border: 1px solid #000;
+    font-size: 18px;
+    cursor: pointer;
+}
+
+.win-text {
+    justify-content: center;
+    justify-self: center;
+    align-self: center;
 }
