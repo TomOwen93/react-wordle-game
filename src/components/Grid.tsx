@@ -237,7 +237,7 @@ export function Grid(): JSX.Element {
             )}
             <hr />
             <hr />
-            {targetWord}
+         
         </div>
     );
 }
