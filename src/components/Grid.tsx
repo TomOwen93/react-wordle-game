@@ -158,7 +158,7 @@ export function Grid(): JSX.Element {
             </div>
             <h1>Wordle</h1>
             <hr />
-            <div ref={animationParent}>
+            <div>
                 {guesses.map((arr, index) => (
                     <WordGuess key={index} guesses={arr} />
                 ))}
