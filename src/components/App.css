@@ -11,35 +11,44 @@ hr {
     font-family: "Franklin Gothic Medium", "Arial Narrow", Arial, sans-serif;
 }
 
+body {
+    display: flex;
+    justify-items: center;
+    justify-content: center;
+    align-items: center;
+    align-content: center;
+}
+
 .App {
     background-color: whitesmoke;
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(5, 1fr);
     align-items: center;
     justify-content: center;
-    outline: 1px red dashed;
+    padding: 10px;
     font-family: "Roboto", sans-serif;
     font: bold;
-    width: 90vw;
+    width: 80vw;
     height: 90vh;
+    border-radius: 20px;
+    outline: 0.5px solid darkgray;
 }
 
 .tile {
     display: inline-block;
-    width: 40px;
-    height: 40px;
+    width: 50px;
+    height: 50px;
     border: 1px solid #000;
     text-align: center;
     font-size: 24px;
-    line-height: 40px;
+    line-height: 50px;
 }
 .tile + .tile {
     margin-left: 10px;
 }
 
 .center-game {
-    grid-column-start: 2;
-    grid-column-end: 3;
+    grid-column: 2/5;
     display: flex;
     align-content: center;
     align-items: center;
@@ -57,8 +66,7 @@ hr {
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 50px;
-    height: 50px;
+    flex: auto;
     border: 1px solid #000;
     font-size: 18px;
     cursor: pointer;
@@ -73,13 +81,14 @@ hr {
     align-items: center;
     justify-content: center;
     width: fit-content;
-    height: 50px;
+    height: auto;
     margin-top: 10px;
     margin-left: auto;
     margin-right: auto;
     border: 1px solid #000;
     font-size: 18px;
     cursor: pointer;
+    flex: auto;
 }
 
 .guess-button-grid {
@@ -88,13 +97,13 @@ hr {
     gap: 0px;
     justify-content: center;
     align-items: center;
+    flex: 1;
 }
 
 .guess-button {
     background-color: lightgray;
     align-self: center;
-    width: 50px;
-    height: 50px;
+    flex: 1;
     border: 1px solid #000;
     font-size: 18px;
     cursor: pointer;
@@ -108,15 +117,16 @@ hr {
     gap: 5px;
     justify-content: center;
     align-items: center;
-    flex-direction: row;
+
+    flex: 1;
 }
 
 .CorrectLocation-tile {
     background-color: green;
     color: white;
     align-self: center;
-    width: 50px;
-    height: 50px;
+    min-width: 50px;
+    min-height: 50px;
     border: 1px solid #000;
     font-size: 18px;
     justify-content: center;
@@ -127,8 +137,8 @@ hr {
     background-color: yellow;
     align-self: center;
 
-    width: 50px;
-    height: 50px;
+    min-width: 50px;
+    min-height: 50px;
     border: 1px solid #000;
     font-size: 18px;
     justify-content: center;
@@ -138,8 +148,8 @@ hr {
 .NotInWord-tile {
     background-color: grey;
     align-self: center;
-    width: 50px;
-    height: 50px;
+    min-width: 50px;
+    min-height: 50px;
     border: 1px solid #000;
     font-size: 18px;
     justify-content: center;
@@ -159,16 +169,16 @@ hr {
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 30px;
-    height: 30px;
+    min-width: 50px;
+    min-height: 50px;
     border: 1px solid #000;
     font-size: 18px;
     cursor: pointer;
 }
 
 .guess-tile {
-    width: 50px;
-    height: 50px;
+    min-width: 50px;
+    min-height: 50px;
     border: 1px solid #000;
     font-size: 18px;
     cursor: pointer;
@@ -179,8 +189,8 @@ hr {
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 30px;
-    height: 30px;
+    min-width: 50px;
+    min-height: 50px;
     border: 1px solid #000;
     font-size: 18px;
     cursor: pointer;
@@ -191,8 +201,8 @@ hr {
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 30px;
-    height: 30px;
+    min-width: 50px;
+    min-height: 50px;
     border: 1px solid #000;
     font-size: 18px;
     cursor: pointer;
@@ -204,8 +214,8 @@ hr {
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 30px;
-    height: 30px;
+    min-width: 50px;
+    min-height: 50px;
     border: 1px solid #000;
     font-size: 18px;
     cursor: pointer;
@@ -221,8 +231,10 @@ hr {
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 50px;
-    height: 50px;
+    flex: auto;
+    min-width: 50px;
+    min-height: 50px;
+
     border: 1px solid #000;
     font-size: 18px;
     cursor: pointer;
@@ -232,9 +244,10 @@ hr {
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 50px;
-    height: 50px;
     border: 1px solid #000;
+    min-width: 50px;
+    min-height: 50px;
+
     font-size: 18px;
     cursor: pointer;
     background-color: dimgray;
