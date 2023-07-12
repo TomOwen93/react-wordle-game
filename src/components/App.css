@@ -7,18 +7,21 @@
 }
 
 hr {
-    width: auto;
+    width: 60%;
     font-family: "Franklin Gothic Medium", "Arial Narrow", Arial, sans-serif;
 }
 
-body {
+.App {
     background-color: whitesmoke;
-    display: flex;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
     align-items: center;
     justify-content: center;
-
+    outline: 1px red dashed;
     font-family: "Roboto", sans-serif;
     font: bold;
+    width: 90vw;
+    height: 90vh;
 }
 
 .tile {
@@ -32,6 +35,16 @@ body {
 }
 .tile + .tile {
     margin-left: 10px;
+}
+
+.center-game {
+    grid-column-start: 2;
+    grid-column-end: 3;
+    display: flex;
+    align-content: center;
+    align-items: center;
+    flex-direction: column;
+    flex-wrap: wrap;
 }
 
 .letter-button-grid {
