@@ -145,7 +145,7 @@ export function Grid(): JSX.Element {
     const wordsinStorage = Object.values(localStorage).map((el: string) => el);
 
     return (
-        <div>
+        <div className="center-game">
             <div className="title-buttons">
                 {titleButtons.map((letter, index) => (
                     <button
@@ -235,7 +235,7 @@ export function Grid(): JSX.Element {
             {localStorage.length > 0 && (
                 <div>
                     {" "}
-                    <h3>PREVIOUS WINS:</h3>
+                    <h3>Previous Wins:</h3>
                     <hr />
                     <ul>
                         {wordsinStorage.map((el, index) => (
